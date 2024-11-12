@@ -1,0 +1,6 @@
+/your-app-directory
+  /app.py
+  /best_model.pkl
+  /scaler.pkl
+  /label_encoder.pkl
+  /requirements.txt
