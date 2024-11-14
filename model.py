@@ -11,8 +11,49 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, classification_report, confusion_matrix
 from imblearn.over_sampling import SMOTE
 
+def load_data():
+    choice = input("Would you like to (1) input details manually or (2) upload a dataset? Enter 1 or 2: ")
+    
+    if choice == '1':
+        # Manual input of user details
+        # Example: You can ask for specific details based on your dataset structure
+        device_model = input("Enter Device Model: ")
+        operating_system = input("Enter Operating System: ")
+        gender = input("Enter Gender: ")
+        app_usage_time = float(input("Enter App Usage Time (min/day): "))
+        screen_on_time = float(input("Enter Screen On Time (hours/day): "))
+        battery_drain = float(input("Enter Battery Drain (mAh/day): "))
+        num_apps_installed = int(input("Enter Number of Apps Installed: "))
+        data_usage = float(input("Enter Data Usage (MB/day): "))
+        age = int(input("Enter Age: "))
+        
+        # Create a DataFrame from the input data
+        data = pd.DataFrame({
+            'Device Model': [device_model],
+            'Operating System': [operating_system],
+            'Gender': [gender],
+            'App Usage Time (min/day)': [app_usage_time],
+            'Screen On Time (hours/day)': [screen_on_time],
+            'Battery Drain (mAh/day)': [battery_drain],
+            'Number of Apps Installed': [num_apps_installed],
+            'Data Usage (MB/day)': [data_usage],
+            'Age': [age]
+        })
+    elif choice == '2':
+        # Upload dataset from a CSV file
+        file_path = input("Enter the path to your CSV file: ")
+        data = pd.read_csv(file_path)
+    else:
+        print("Invalid choice. Please enter 1 or 2.")
+        return None
+    
+    return data
+
 # Load and examine the dataset
-data = pd.read_csv(r"C:\Users\gmusk\OneDrive\Desktop\user_behavior_dataset.csv")
+data = load_data()
+if data is None:
+    exit()
+
 print(data.head())
 print(data.shape)
 print(data.isnull().sum())
