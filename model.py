@@ -16,7 +16,6 @@ def load_data():
     
     if choice == '1':
         # Manual input of user details
-        # Example: You can ask for specific details based on your dataset structure
         device_model = input("Enter Device Model: ")
         operating_system = input("Enter Operating System: ")
         gender = input("Enter Gender: ")
@@ -39,10 +38,16 @@ def load_data():
             'Data Usage (MB/day)': [data_usage],
             'Age': [age]
         })
+        
     elif choice == '2':
         # Upload dataset from a CSV file
         file_path = input("Enter the path to your CSV file: ")
-        data = pd.read_csv(file_path)
+        try:
+            data = pd.read_csv(file_path)
+        except Exception as e:
+            print(f"Error loading file: {e}")
+            return None
+            
     else:
         print("Invalid choice. Please enter 1 or 2.")
         return None
@@ -113,9 +118,12 @@ models = {
 for name, model in models.items():
     print(f"Training {name}...")
     
-    # Define and tune hyperparameters for each model
-    param_grid = {}
-    # (Implement the same hyperparameter tuning as in the provided code)
+    # Define and tune hyperparameters for each model (example param grid)
+    param_grid = {
+        # Example parameters; adjust based on your needs.
+        'Random Forest': {'n_estimators': [100, 200], 'max_depth': [None, 10, 20]},
+        'Gradient Boosting': {'n_estimators': [100], 'learning_rate': [0.01, 0.1]},
+    }.get(name, {})
     
     grid_search = GridSearchCV(model, param_grid, cv=5, scoring='accuracy', n_jobs=-1)
     grid_search.fit(X_train_resampled, y_train_resampled)
