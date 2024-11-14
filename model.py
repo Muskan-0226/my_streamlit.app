@@ -45,6 +45,7 @@ def load_data():
         file_path = input("Enter the path to your CSV file: ")
         try:
             data = pd.read_csv(file_path)
+            print("Dataset loaded successfully.")
         except Exception as e:
             print(f"Error loading file: {e}")
             return None
@@ -60,6 +61,7 @@ data = load_data()
 if data is None:
     exit()
 
+# Display basic information about the dataset
 print(data.head())
 print(data.shape)
 print(data.isnull().sum())
