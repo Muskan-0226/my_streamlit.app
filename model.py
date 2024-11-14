@@ -121,7 +121,6 @@ for name, model in models.items():
     
     # Define and tune hyperparameters for each model (example param grid)
     param_grid = {
-        # Example parameters; adjust based on your needs.
         'Random Forest': {'n_estimators': [100, 200], 'max_depth': [None, 10, 20]},
         'Gradient Boosting': {'n_estimators': [100], 'learning_rate': [0.01, 0.1]},
     }.get(name, {})
@@ -163,4 +162,4 @@ for name, model in models.items():
 
 # Save the best-performing model
 with open('best_model.pkl', 'wb') as file:
-    pickle.dump(best_model, file)
+    pickle.dump(best_model, file) 
