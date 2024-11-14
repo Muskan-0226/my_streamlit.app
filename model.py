@@ -13,48 +13,52 @@ from imblearn.over_sampling import SMOTE
 
 def load_data():
     """Load data based on user input."""
-    choice = input("Would you like to (1) input details manually or (2) upload a dataset? Enter 1 or 2: ")
-    
-    if choice == '1':
-        # Manual input of user details
-        device_model = input("Enter Device Model: ")
-        operating_system = input("Enter Operating System: ")
-        gender = input("Enter Gender: ")
-        app_usage_time = float(input("Enter App Usage Time (min/day): "))
-        screen_on_time = float(input("Enter Screen On Time (hours/day): "))
-        battery_drain = float(input("Enter Battery Drain (mAh/day): "))
-        num_apps_installed = int(input("Enter Number of Apps Installed: "))
-        data_usage = float(input("Enter Data Usage (MB/day): "))
-        age = int(input("Enter Age: "))
+    while True:
+        choice = input("Would you like to (1) input details manually or (2) upload a dataset? Enter 1 or 2: ")
         
-        # Create a DataFrame from the input data
-        data = pd.DataFrame({
-            'Device Model': [device_model],
-            'Operating System': [operating_system],
-            'Gender': [gender],
-            'App Usage Time (min/day)': [app_usage_time],
-            'Screen On Time (hours/day)': [screen_on_time],
-            'Battery Drain (mAh/day)': [battery_drain],
-            'Number of Apps Installed': [num_apps_installed],
-            'Data Usage (MB/day)': [data_usage],
-            'Age': [age]
-        })
-        
-    elif choice == '2':
-        # Upload dataset from a CSV file
-        file_path = input("Enter the path to your CSV file: ")
-        try:
-            data = pd.read_csv(file_path)
-            print("Dataset loaded successfully.")
-        except Exception as e:
-            print(f"Error loading file: {e}")
-            return None
+        if choice == '1':
+            # Manual input of user details
+            try:
+                device_model = input("Enter Device Model: ")
+                operating_system = input("Enter Operating System: ")
+                gender = input("Enter Gender: ")
+                app_usage_time = float(input("Enter App Usage Time (min/day): "))
+                screen_on_time = float(input("Enter Screen On Time (hours/day): "))
+                battery_drain = float(input("Enter Battery Drain (mAh/day): "))
+                num_apps_installed = int(input("Enter Number of Apps Installed: "))
+                data_usage = float(input("Enter Data Usage (MB/day): "))
+                age = int(input("Enter Age: "))
+                
+                # Create a DataFrame from the input data
+                data = pd.DataFrame({
+                    'Device Model': [device_model],
+                    'Operating System': [operating_system],
+                    'Gender': [gender],
+                    'App Usage Time (min/day)': [app_usage_time],
+                    'Screen On Time (hours/day)': [screen_on_time],
+                    'Battery Drain (mAh/day)': [battery_drain],
+                    'Number of Apps Installed': [num_apps_installed],
+                    'Data Usage (MB/day)': [data_usage],
+                    'Age': [age]
+                })
+                
+                return data
             
-    else:
-        print("Invalid choice. Please enter 1 or 2.")
-        return None
-    
-    return data
+            except ValueError as e:
+                print(f"Invalid input: {e}. Please try again.")
+        
+        elif choice == '2':
+            # Upload dataset from a CSV file
+            file_path = input("Enter the path to your CSV file: ")
+            try:
+                data = pd.read_csv(file_path)
+                print("Dataset loaded successfully.")
+                return data
+            except Exception as e:
+                print(f"Error loading file: {e}. Please try again.")
+        
+        else:
+            print("Invalid choice. Please enter 1 or 2.")
 
 # Load and examine the dataset
 data = load_data()
@@ -162,6 +166,6 @@ for name, model in models.items():
         plt.title(f'Feature Importances - {name}')
         plt.show()
 
-# Save the best-performing model
+# Save the best-performing model to a file
 with open('best_model.pkl', 'wb') as file:
     pickle.dump(best_model, file) 
