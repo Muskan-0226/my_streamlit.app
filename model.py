@@ -12,6 +12,7 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 from imblearn.over_sampling import SMOTE
 
 def load_data():
+    """Load data based on user input."""
     choice = input("Would you like to (1) input details manually or (2) upload a dataset? Enter 1 or 2: ")
     
     if choice == '1':
